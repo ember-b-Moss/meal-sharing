@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const knex = require("../database");
 
-
 //GET api/meals/ query parameters
 router.get("/", async (req, res) => {
   try {
@@ -17,16 +16,18 @@ router.get("/", async (req, res) => {
     if (maxPrice) {
       // api/meals?maxPrice=90
       result = await knex("meal").where("price", "<", maxPriceParse).select();
-      
     } else if (availableReservations) {
       //api/meals?availableReservations=true
       result = await knex
-        .from("meal")        
+        .from("meal")
         .leftJoin("reservation", { "meal.id": "reservation.meal_id" })
-        .groupBy("meal.id")        
-        .having(knex.raw('meal.max_reservation > coalesce(sum(reservation.number_of_guests), 0)'))
+        .groupBy("meal.id")
+        .having(
+          knex.raw(
+            "meal.max_reservation > coalesce(sum(reservation.number_of_guests), 0)"
+          )
+        )
         .select("meal.*");
-
     } else if (someTitle) {
       //api/meals?title=per
       result = await knex("meal")
@@ -59,59 +60,56 @@ router.post("/", async (request, response) => {
     const newMeal = await knex("meal").insert(request.body);
     response.json(newMeal);
   } catch (error) {
-    response.status(500).send(`error occured-${error.message}`)
-    
+    response.status(500).send(`error occured-${error.message}`);
   }
 });
 
- //api/meals/{id}	GET	Returns meal by id	GET api/meals/2
- router.get("/:id", async (request, response) => {
+//api/meals/{id}	GET	Returns meal by id	GET api/meals/2
+router.get("/:id", async (request, response) => {
   try {
     //console.log(request.params.id)
-    const mealById = await knex('meal')
+    const mealById = await knex("meal")
       .select()
-      .where({ id: request.params.id})
-      if (mealById.length == 0) {
-        response.status(404).send(`Meal with the corresponding id is not found`)
-      } 
-      response.json(mealById[0])
+      .where({ id: request.params.id });
+    if (mealById.length == 0) {
+      response.status(404).send(`Meal with the corresponding id is not found`);
+    }
+    response.json(mealById[0]);
   } catch (error) {
-    response.status(400).send(`Bad request, ${id} is not a number`)
+    response.status(500).send(`error occured-${error.message}`);
   }
-}); 
+});
 
 //api/meals/{id}	PUT	Updates the meal by id	PUT api/meals/2
 router.put("/:id", async (request, response) => {
   try {
-    console.log(request.body.id)
-    const updatedMeal = await knex('meal')
-      .where({ id: request.params.id})
-      .update(request.body)
-      if (updatedMeal.length == 0) {
-        response.status(404).send("Meal with the corresponding id is not found")
-      } 
-      response.json(updatedMeal)
+    console.log(request.body.id);
+    const updatedMeal = await knex("meal")
+      .where({ id: request.params.id })
+      .update(request.body);
+    if (updatedMeal.length == 0) {
+      response.status(404).send("Meal with the corresponding id is not found");
+    }
+    response.json(updatedMeal);
   } catch (error) {
-    response.status(400).send(`Bad request, ${id} is not a number`)
+    response.status(500).send(`error occured-${error.message}`);
   }
 });
 
 //api/meals/{id}	DELETE	Deletes the meal by id	DELETE meals/2
 router.delete("/:id", async (request, response) => {
   try {
-    console.log(request.body.id)
-    const deleteMeal = await knex('meal')
-      .where({ id: request.params.id})
-      .del()
-      if (deleteMeal.length == 0) {
-        response.status(404).send("Meal with the corresponding id is not found")
-      } 
-      response.json(deleteMeal)
+    console.log(request.body.id);
+    const deleteMeal = await knex("meal")
+      .where({ id: request.params.id })
+      .del();
+    if (deleteMeal.length == 0) {
+      response.status(404).send("Meal with the corresponding id is not found");
+    }
+    response.json(deleteMeal);
   } catch (error) {
-    response.status(400).send(`Bad request, ${id} is not a number`)
+    response.status(500).send(`error occured-${error.message}`);
   }
 });
 
 module.exports = router;
-
-
