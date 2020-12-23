@@ -14,21 +14,21 @@ const fetchMealWithId = (id) => {
     mealsSection.append(divTile);
     divTile.className = "meal-tile";
     divTile.innerHTML = `
-        <img src="/public/images/meal-${id}.jpg" alt="${data[0].title}" />
+        <img src="/public/images/meal-${id}.jpg" alt="${data.title}" />
     `;
     const divDetails = document.createElement("div");
     divTile.append(divDetails);
 
     divDetails.innerHTML = `
-        <header class="meal-title">${data[0].title}</header>
-        <p>${data[0].description}</p>
+        <header class="meal-title">${data.title}</header>
+        <p>${data.description}</p>
         <div class="info">
-        <div class="price"><span>Price: </span>${data[0].price} DKK</div>
+        <div class="price"><span>Price: </span>${data.price} DKK</div>
         <div class="guest-number"><span>Maximum number of guests: </span><span id="max-guests-number">${
-          data[0].max_guests
+          data.max_guests
         }</span></div>
         <div class="when"><span>When: </span>${new Date(
-          data[0].when_date
+          data.when_date
         ).toLocaleString()}</div>
         </div>
     `;
