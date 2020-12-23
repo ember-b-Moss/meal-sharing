@@ -6,12 +6,11 @@ const reservationForm = async (id) => {
       .then((response) => response.json())
       .then((data) => (dataArr = data.filter((meal) => meal.id == id)));
 
-    if (dataArr.length > 0)
-      availableSpots = dataArr[0].max_guests - dataArr[0].number_of_guests;
-
-    return (
-      dataArr.length > 0 && dataArr[0].number_of_guests < dataArr[0].max_guests
-    );
+    if (dataArr.length > 0) {
+      console.log({ dataArr });
+      availableSpots = dataArr[0].max_reservation;
+    }
+    return dataArr.length > 0 && availableSpots > 0;
   };
 
   if (await checkAvailableSpots()) {
@@ -49,11 +48,11 @@ const reservationForm = async (id) => {
       const numberGuests = document.getElementById("number-of-guests").value;
 
       const data = {
-        name,
-        email,
-        phone_number: phoneNumber,
+        contact_name: name,
+        contact_email: email,
+        contact_phonenumber: phoneNumber,
         number_of_guests: numberGuests,
-        meals_id: id,
+        meal_id: id,
       };
 
       if (name && email && phoneNumber && numberGuests) {
