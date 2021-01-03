@@ -32,7 +32,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Link to deployed website: 
+Link to deployed website: (https://meal-sharing-ember.herokuapp.com/)
 
 This project will be built out over 3 different classes:
 
@@ -72,3 +72,4 @@ The api can now be found on `http://localhost:3000/api/` an example is `http://l
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@benna100](https://github.com/benna100) - Idea & Initial work
+- [@ember-b-Moss] (https://github.com/ember-b-Moss) - Front & Back - end development and production fixes
