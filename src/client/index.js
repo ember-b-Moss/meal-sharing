@@ -1,15 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById("root")
-);
+import SPARouter from "@kodnificent/sparouter";
 
-serviceWorker.unregister();
+import homeRouter from "./pages/home";
+import mealsRouter from "./pages/meals";
+import mealRouter from "./pages/meal";
+
+const options = {
+  historyMode: true, // set this to true if you use the HTML5 history mode API
+};
+const router = new SPARouter(options);
+
+router.get("/", homeRouter);
+router.get("/meals", mealsRouter);
+router.get("/meals/{id}", mealRouter);
+
+router.init();

@@ -20,6 +20,7 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "@kodnificent/sparouter": "^1.1.0",
     "@types/xml": "^1.0.3",
     "app-root-path": "^2.1.0",
     "babel-loader": "^8.1.0",
@@ -52,9 +53,11 @@
   "devDependencies": {
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
     "concurrently": "^5.3.0",
+    "file-loader": "^6.2.0",
     "nodemon": "^1.12.1",
     "prettier": "2.1.2",
     "sequelize-cli": "^5.4.0",
+    "url-loader": "^4.1.1",
     "webpack-dev-server": "^3.11.0"
   }
 }
