@@ -64,7 +64,13 @@ const reservationForm = async (id) => {
           },
           body: JSON.stringify(data),
         })
-          .then((res) => res.text())
+          //.then((res) => res.text())
+          .then(function (response) {
+            if (!response.ok) {
+              return "please try again";
+            }
+            return response.text();
+          })
           .then((text) => {
             const response = document.getElementById("response");
             response.innerHTML = text;
